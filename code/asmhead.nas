@@ -1,4 +1,4 @@
-; haribote-os boot asm
+; RabbitOS boot asm
 ; TAB=4
 
 [INSTRSET "i486p"]
