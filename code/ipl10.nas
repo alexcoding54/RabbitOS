@@ -94,7 +94,7 @@ next:
 		CMP		CH,CYLS
 		JB		readloop		; CH < CYLS 跳转到readloop
 
-; 读取完毕，跳转到haribote.sys执行！
+; 读取完毕
 		MOV		[0x0ff0],CH		; IPLがどこまで読んだのかをメモ
 		JMP		0xc200
 
