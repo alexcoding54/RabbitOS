@@ -110,8 +110,9 @@ void init_logo(char *logo)
 
 void init_screen8(char *vram, int x, int y)
 {
-	boxfill8(vram, x, COL8_008484,  0,     0,      x, y );
+	boxfill8(vram, x, COL8_008484,  0,     0, x, y );
 	boxfill8(vram, x, COL8_C6C6C6,  0,     0, x, 28);
+    boxfill8(vram, x, COL8_848484, 0, 28, x, 29);
 
 	return;
 }
