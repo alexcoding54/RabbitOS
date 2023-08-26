@@ -366,7 +366,7 @@ struct SHEET *open_console(struct SHTCTL *shtctl, unsigned int memtotal)
 	struct SHEET *sht = sheet_alloc(shtctl);
 	unsigned char *buf = (unsigned char *) memman_alloc_4k(memman, 256 * 165);
 	sheet_setbuf(sht, buf, 256, 165, -1); /*无透明色*/
-	make_window8(buf, 256, 165, "console", 0);
+	make_window8(buf, 256, 165, "Console", 0);
 	make_textbox8(sht, 8, 28, 240, 128, COL8_000000);
 	sht->task = open_constask(sht, memtotal);
 	sht->flags |= 0x20;	/*有光标*/

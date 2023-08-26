@@ -39,7 +39,7 @@ void console_task(struct SHEET *sheet, int memtotal)
 				if (i != 0) {
 					timer_init(cons.timer, &task->fifo, 0); /*下次置0 */
 					if (cons.cur_c >= 0) {
-						cons.cur_c = COL8_FFFFFF;
+						cons.cur_c = COL8_848484;
 					}
 				} else {
 					timer_init(cons.timer, &task->fifo, 1); /*下次置1 */
@@ -50,7 +50,7 @@ void console_task(struct SHEET *sheet, int memtotal)
 				timer_settime(cons.timer, 50);
 			}
 			if (i == 2) { /*光标ON */
-				cons.cur_c = COL8_FFFFFF;
+				cons.cur_c = COL8_848484;
 			}
 			if (i == 3) { /*光标OFF */
 				boxfill8(sheet->buf, sheet->bxsize, COL8_000000, cons.cur_x, cons.cur_y, cons.cur_x + 7, cons.cur_y + 15);
