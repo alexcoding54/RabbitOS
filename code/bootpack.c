@@ -113,10 +113,10 @@ void HariMain(void)
 	for (;;) {
         // 显示日期时间
         sprintf(ds, "%d/%d/%d", get_year_hex(), get_mon_hex(), get_dom_hex());
-        putfonts8_asc_sht(sht_back, binfo->scrnx-130, 8, COL8_000000, COL8_C6C6C6, ds, 10);
-        sprintf(ds, "%d:%0.2d", get_hour_hex(), get_min_hex());
-        putfonts8_asc_sht(sht_back, binfo->scrnx-45, 8, COL8_000000, COL8_C6C6C6, ds, 5);
-        sheet_refresh(sht_back, binfo->scrnx-130, 8, binfo->scrnx-45+5*8, binfo->scrny-50+16);
+        putfonts8_asc_sht(sht_back, binfo->scrnx-160, 8, COL8_000000, COL8_C6C6C6, ds, 10);
+        sprintf(ds, "%d:%0.2d:%0.2d", get_hour_hex(), get_min_hex(), get_sec_hex());
+        putfonts8_asc_sht(sht_back, binfo->scrnx-75, 8, COL8_000000, COL8_C6C6C6, ds, 10);
+        sheet_refresh(sht_back, binfo->scrnx-160, 8, binfo->scrnx-45+5*8, binfo->scrny-50+16);
         
 		if (fifo32_status(&keycmd) > 0 && keycmd_wait < 0) {
 			/* 如果存在向键盘控制器发送的数据，则发送它 */
