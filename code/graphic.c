@@ -76,9 +76,9 @@ void init_logo(char *logo)
         "....*O...OO.OO...O*....",
         "...*O.............O*...",
         "..*O...............O*..",
-        ".*O...OO.......OO...O*.",
-        "*O...OOOO.....OOOO...O*",
-        "*O....OO.......OO....O*",
+        ".*O...QQ.......QQ...O*.",
+        "*O...QQQQ.....QQQQ...O*",
+        "*O....QQ.......QQ....O*",
         "*O...................O*",
         "*O...................O*",
         "*O...................O*",
@@ -101,6 +101,8 @@ void init_logo(char *logo)
                 logo[y*23+x] = COL8_FFFFFF;
             if (_logo[y][x] == 'O')
                 logo[y*23+x] = COL8_000000;
+            if (_logo[y][x] == 'Q')
+                logo[y*23+x] = COL8_FF0000;
         }
     }
     return;
