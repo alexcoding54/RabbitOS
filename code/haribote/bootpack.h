@@ -57,7 +57,7 @@ void putfonts8_asc(char *vram, int xsize, int x, int y, char c, unsigned char *s
 void init_mouse_cursor8(char *mouse, char bc);
 void putblock8_8(char *vram, int vxsize, int pxsize,
 	int pysize, int px0, int py0, char *buf, int bxsize);
-int read_picture(int *fat, short *vram, int x, int y);
+int read_picture(int *fat, char *vram, int x, int y);
 #define COL8_000000		0
 #define COL8_FF0000		1
 #define COL8_00FF00		2
@@ -213,7 +213,7 @@ struct TASK {
 	struct FIFO32 fifo;
 	struct TSS32 tss;
 	struct SEGMENT_DESCRIPTOR ldt[2];
-	struct CONSOLE *cons;
+	struct CONSOLE *cons; 
 	int ds_base, cons_stack;
 	struct FILEHANDLE *fhandle;
 	int *fat;
@@ -294,6 +294,8 @@ int tek_getsize(unsigned char *p);
 int tek_decomp(unsigned char *p, char *q, int size);
 
 /* bootpack.c */
+#define CONX 512
+#define CONY 356
 struct TASK *open_constask(struct SHEET *sht, unsigned int memtotal);
 struct SHEET *open_console(struct SHTCTL *shtctl, unsigned int memtotal);
 

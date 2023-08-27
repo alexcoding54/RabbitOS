@@ -99,7 +99,7 @@ void console_task(struct SHEET *sheet, int memtotal)
 					cons_putchar(&cons, '>', 1);
 				} else {
 					/*一般字符*/
-					if (cons.cur_x < 240) {
+					if (cons.cur_x < CONX-16) {
 						/*显示一个字符之后将光标后移一位*/
 						cmdline[cons.cur_x / 8 - 2] = i - 256;
 						cons_putchar(&cons, i - 256, 1);
@@ -129,7 +129,7 @@ void cons_putchar(struct CONSOLE *cons, int chr, char move)
 				putfonts8_asc_sht(cons->sht, cons->cur_x, cons->cur_y, COL8_FFFFFF, COL8_000000, " ", 1);
 			}
 			cons->cur_x += 8;
-			if (cons->cur_x == 8 + 240) {
+			if (cons->cur_x == 8 + CONX-16) {
 				cons_newline(cons);
 			}
 			if (((cons->cur_x - 8) & 0x1f) == 0) {
@@ -147,7 +147,7 @@ void cons_putchar(struct CONSOLE *cons, int chr, char move)
 		if (move != 0) {
 			/* move��0�̂Ƃ��̓J�[�\����i�߂Ȃ� */
 			cons->cur_x += 8;
-			if (cons->cur_x == 8 + 240) {
+			if (cons->cur_x == 8 + CONX-16) {
 				cons_newline(cons);
 			}
 		}
@@ -166,16 +166,16 @@ void cons_newline(struct CONSOLE *cons)
 		/* �X�N���[�� */
 		if (sheet != 0) {
 			for (y = 28; y < 28 + 112; y++) {
-				for (x = 8; x < 8 + 240; x++) {
+				for (x = 8; x < 8 + CONX-16; x++) {
 					sheet->buf[x + y * sheet->bxsize] = sheet->buf[x + (y + 16) * sheet->bxsize];
 				}
 			}
 			for (y = 28 + 112; y < 28 + 128; y++) {
-				for (x = 8; x < 8 + 240; x++) {
+				for (x = 8; x < 8 + CONX-16; x++) {
 					sheet->buf[x + y * sheet->bxsize] = COL8_000000;
 				}
 			}
-			sheet_refresh(sheet, 8, 28, 8 + 240, 28 + 128);
+			sheet_refresh(sheet, 8, 28, 8 + CONX-16, 28 + 128);
 		}
 	}
 	cons->cur_x = 8;
@@ -241,11 +241,11 @@ void cmd_cls(struct CONSOLE *cons)
 	int x, y;
 	struct SHEET *sheet = cons->sht;
 	for (y = 28; y < 28 + 128; y++) {
-		for (x = 8; x < 8 + 240; x++) {
+		for (x = 8; x < 8 + CONX-16; x++) {
 			sheet->buf[x + y * sheet->bxsize] = COL8_000000;
 		}
 	}
-	sheet_refresh(sheet, 8, 28, 8 + 240, 28 + 128);
+	sheet_refresh(sheet, 8, 28, 8 + CONX-16, 28 + 128);
 	cons->cur_y = 28;
 	return;
 }

@@ -215,7 +215,7 @@ void putblock8_8(char *vram, int vxsize, int pxsize,
 }
 
 
-int read_picture(int *fat, short *vram, int x, int y)
+int read_picture(int *fat, char *vram, int x, int y)
 {
     int i, j, x0, y0, fsize, info[4];
     unsigned char *filebuf, r, g, b;

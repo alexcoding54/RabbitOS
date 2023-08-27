@@ -115,17 +115,17 @@ void HariMain(void)
 	for (;;) {
         // 显示日期时间
         sprintf(ds, "%d/%d/%d", get_year_hex(), get_mon_hex(), get_dom_hex());
-        putfonts8_asc_sht(sht_back, binfo->scrnx-160, 8, COL8_000000, COL8_C6C6C6, ds, 10);
+        putfonts8_asc_sht(sht_back, binfo->scrnx-160, 8, COL8_000000, COL8_C6C6C6, ds, strlen("%d/%d/%d"));
         sprintf(ds, "%d:%0.2d:%0.2d", get_hour_hex(), get_min_hex(), get_sec_hex());
-        putfonts8_asc_sht(sht_back, binfo->scrnx-75, 8, COL8_000000, COL8_C6C6C6, ds, 10);
+        putfonts8_asc_sht(sht_back, binfo->scrnx-75, 8, COL8_000000, COL8_C6C6C6, ds, strlen("%d:%0.2d:%0.2d"));
         sheet_refresh(sht_back, binfo->scrnx-160, 8, binfo->scrnx-45+5*8, binfo->scrny-50+16);
         
-        putfonts8_asc_sht(sht_back, binfo->scrnx-300, 6, COL8_000000, COL8_848484, WINNAME, 16);
+        putfonts8_asc_sht(sht_back, binfo->scrnx-295, 6, COL8_000000, COL8_848484, WINNAME, 15);
         
-        putfonts8_asc_sht(sht_back, binfo->scrnx-966, 6, COL8_000000, COL8_C6C6C6, "File", 4);
-        putfonts8_asc_sht(sht_back, binfo->scrnx-906, 6, COL8_000000, COL8_C6C6C6, "Edit", 4);
-        putfonts8_asc_sht(sht_back, binfo->scrnx-846, 6, COL8_000000, COL8_C6C6C6, "Window", 6);
-        putfonts8_asc_sht(sht_back, binfo->scrnx-766, 6, COL8_000000, COL8_C6C6C6, "Help", 4);
+        putfonts8_asc_sht(sht_back, binfo->scrnx-966, 6, COL8_000000, COL8_C6C6C6, "File", strlen("File"));
+        putfonts8_asc_sht(sht_back, binfo->scrnx-906, 6, COL8_000000, COL8_C6C6C6, "Edit", strlen("Edit"));
+        putfonts8_asc_sht(sht_back, binfo->scrnx-846, 6, COL8_000000, COL8_C6C6C6, "Window", strlen("Window"));
+        putfonts8_asc_sht(sht_back, binfo->scrnx-766, 6, COL8_000000, COL8_C6C6C6, "Help", strlen("Help"));
         
 		if (fifo32_status(&keycmd) > 0 && keycmd_wait < 0) {
 			/* 如果存在向键盘控制器发送的数据，则发送它 */
@@ -373,10 +373,10 @@ struct SHEET *open_console(struct SHTCTL *shtctl, unsigned int memtotal)
 {
 	struct MEMMAN *memman = (struct MEMMAN *) MEMMAN_ADDR;
 	struct SHEET *sht = sheet_alloc(shtctl);
-	unsigned char *buf = (unsigned char *) memman_alloc_4k(memman, 256 * 165);
-	sheet_setbuf(sht, buf, 256, 165, -1); /*无透明色*/
-	make_window8(buf, 256, 165, "Console", 0);
-	make_textbox8(sht, 8, 28, 240, 128, COL8_000000);
+	unsigned char *buf = (unsigned char *) memman_alloc_4k(memman, 4 * CONX * CONY);
+	sheet_setbuf(sht, buf, CONX, CONY, -1); /*无透明色*/
+	make_window8(buf, CONX, CONY, "Console", 0);
+	make_textbox8(sht, 8, 28, CONX-16, CONY-37, COL8_000000);
 	sht->task = open_constask(sht, memtotal);
 	sht->flags |= 0x20;	/*有光标*/
 	return sht;
@@ -396,8 +396,9 @@ void close_console(struct SHEET *sht)
 {
 	struct MEMMAN *memman = (struct MEMMAN *) MEMMAN_ADDR;
 	struct TASK *task = sht->task;
-	memman_free_4k(memman, (int) sht->buf, 256 * 165);
+	memman_free_4k(memman, (int) sht->buf, CONX * CONY);
 	sheet_free(sht);
 	close_constask(task);
 	return;
 }
+
